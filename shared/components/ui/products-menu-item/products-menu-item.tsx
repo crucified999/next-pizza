@@ -13,6 +13,7 @@ export const ProductsMenuItemUI: React.FC<ProductsMenuItemUIProps> = ({ category
     <li onClick={() => setIsActive(!isActive)} className={cn(isActive && "bg-white shadow rounded-2xl")}>
       <Button variant="ghost" className="cursor-pointer">
         <span>{category}</span>
+        { category === "Ещё" && <img src="/arrow-down.svg" alt="arrow-down" /> }
       </Button>
     </li>
   )

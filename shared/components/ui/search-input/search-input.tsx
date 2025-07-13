@@ -1,9 +1,6 @@
 import { Input } from "../input/input";
 import { SearchInputMenuUI } from "../search-input-menu/search-input-menu";
-
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 export const SearchInputUI = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -20,7 +17,7 @@ export const SearchInputUI = () => {
             onBlur={() => setIsFocused(false)}
             type="text" 
             placeholder="Поиск пиццы"
-            className="w-full focus:outline-none border-none"/>
+            className="w-full focus:outline-none border-none bg-transparent"/>
 
         <SearchInputMenuUI items={[]} isFocused={isFocused} />
         
