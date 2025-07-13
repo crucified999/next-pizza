@@ -1,0 +1,1 @@
+export { SearchInputMenuItemUI } from "./search-input-item";

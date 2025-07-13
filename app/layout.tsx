@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistNunito.className} antialiased`}
+        className={`${geistNunito.className} antialiased px-15`}
       >
         {children}       
       </body>

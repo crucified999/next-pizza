@@ -10,7 +10,7 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
 
   return (
     <>
-    <header className="flex py-11 px-15">
+    <header className="flex py-11">
       <Link href="/">
         <div className='flex items-center gap-3.75 mr-18'>
           <img src="/logo.png" alt="logo" className="w-10 h-10" />
@@ -22,10 +22,6 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
           </div>
         </div>
       </Link>
-      {/* <div className="bg-white flex items-center rounded-[15px] py-2 px-5 flex-1 border border-transparent transition-colors duration-150 has-[:focus]:border-gray-300">
-        <img src="/search.svg" alt="search" className="w-4 h-4" />
-        <Input type="text" placeholder="Поиск пиццы" className="w-full focus:outline-none border-none" />
-      </div> */}
       <SearchInputUI />
       <div className="flex items-center gap-4 ml-[21px]">
 
@@ -69,8 +65,7 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
         
       </div>
     </header>
-    <hr />
-    
+    <hr className="w-screen -mx-[calc(50vw-50%)]"/>
     </>
     
   )
