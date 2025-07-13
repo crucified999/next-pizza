@@ -1,0 +1,1 @@
+export { FiltersItemUI } from "./filters-item";
