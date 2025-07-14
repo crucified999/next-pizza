@@ -1,8 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/shared/services/store";
-import { ProductListUI } from "../ui/product-list/product-list";
+import { ProductListUI } from "../ui/products-list/products-list";
 import { useEffect } from "react";
-import { selectProducts } from "@/shared/slices/nextPizzaSlice";
-import { fetchProducts } from "@/shared/slices/nextPizzaSlice";
+import {
+  fetchIngredients,
+  fetchCategories,
+  selectCategories,
+  selectIngredients,
+  selectProducts,
+} from "@/shared/services/slices/nextPizzaSlice";
+import { fetchProducts } from "@/shared/services/slices/nextPizzaSlice";
 
 // const products = [
 //   {
@@ -27,15 +33,11 @@ import { fetchProducts } from "@/shared/slices/nextPizzaSlice";
 
 export const ProductList = () => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector(selectProducts);
-
-  console.log(products);
+  const categories = useAppSelector(selectCategories);
 
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(fetchCategories());
   }, [dispatch]);
 
-  return (  
-    <ProductListUI products={products} />
-  )
-}
+  return <ProductListUI categories={categories} />;
+};

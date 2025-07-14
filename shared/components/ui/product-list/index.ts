@@ -1,1 +1,0 @@
-export { ProductListUI } from "./product-list";

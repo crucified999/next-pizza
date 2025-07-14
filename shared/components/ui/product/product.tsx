@@ -7,7 +7,7 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   title,
   price,
   image,
-  description,
+  ingredients,
   categoryId, 
 }) => {
   return (
@@ -22,7 +22,9 @@ export const ProductUI: React.FC<ProductUIProps> = ({
         </div>
         <div>
           <Title as="h3" text={title} className="text-[22px]" />
-          <p className="text-[14px] text-black/70">{description}</p>
+          <p className="text-[14px] text-black/70">{
+            ingredients.map((ingredient, index) => index === 0 ? ingredient.name : ingredient.name.toLowerCase()).join(", ")
+          }</p>
         </div>
       </div>
       <footer className="flex justify-between items-center">

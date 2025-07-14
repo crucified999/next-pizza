@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { nextPizzaSlice } from "../slices/nextPizzaSlice";
+import { nextPizzaSlice } from "./slices/nextPizzaSlice";
 
 const rootReducer = combineReducers({
   nextPizza: nextPizzaSlice.reducer,

@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import { ProductsMenuUI } from "../ui/products-menu/product-menu";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import { fetchCategories, selectCategories, selectSortedBy } from "../../slices/nextPizzaSlice";
+import {
+  fetchCategories,
+  selectCategories,
+  selectSortedBy,
+} from "../../services/slices/nextPizzaSlice";
 
 // const items = [
 //   {
@@ -26,8 +30,7 @@ import { fetchCategories, selectCategories, selectSortedBy } from "../../slices/
 //   }
 // ];
 
-
-const sortCategories = [ "популярности", "цене", "рейтингу" ];
+const sortCategories = ["популярности", "цене", "рейтингу"];
 
 export const ProductMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,21 +39,31 @@ export const ProductMenu: React.FC = () => {
   const [isSortingMenuShown, setIsSortingMenuShown] = useState(false);
   const sortedBy = useAppSelector(selectSortedBy);
 
-  const sortedByCategory = sortCategories.filter((category) => category !== sortedBy);
+  const sortedByCategory = sortCategories.filter(
+    (category) => category !== sortedBy
+  );
 
   const onHover = () => {
     setIsSortingMenuShown(true);
-  }
+  };
 
   const onLeave = () => {
     setIsSortingMenuShown(false);
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   return (
-    <ProductsMenuUI currentSortingCategory={sortedBy} title="Все пиццы" items={categories} sortCategories={sortedByCategory} isSortingMenuShown={isSortingMenuShown} onHover={onHover} onLeave={onLeave} />
-  )
-}
+    <ProductsMenuUI
+      currentSortingCategory={sortedBy}
+      title="Все пиццы"
+      items={categories}
+      sortCategories={sortedByCategory}
+      isSortingMenuShown={isSortingMenuShown}
+      onHover={onHover}
+      onLeave={onLeave}
+    />
+  );
+};

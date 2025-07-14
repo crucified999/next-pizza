@@ -1,5 +1,6 @@
-import { Category, Product } from "@prisma/client";
+import { TCategory, TProduct, TIngredient } from "./types";
 import { ApiRoutes } from "./routes";
+import { TCategoryWithRelations, TProductWithRelations } from "@/types/prisma";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -10,12 +11,16 @@ type TServerResponse<T> = {
   success: boolean;
 } & T;
 
-type TProductsResponse = TServerResponse<{
-   data: Product[];
+type TCategoriesResponse = TServerResponse<{
+  data: TCategoryWithRelations[];
 }>;
 
-type TCategoriesResponse = TServerResponse<{
-  data: Category[];
+type TProductsResponse = TServerResponse<{
+   data: TProductWithRelations[];
+}>;
+
+type TIngredientsResponse = TServerResponse<{
+  data: TIngredient[];
 }>;
 
 export const getProducts = () => {
@@ -31,6 +36,26 @@ export const getProducts = () => {
 export const getCategories = () => {
   return fetch(`${BASE_URL}${ApiRoutes.CATEGORIES}`)
     .then((res) => checkResponse<TCategoriesResponse>(res))
+    .then((data) => {
+      if (data.success) return data.data;
+
+      return Promise.reject(data);
+    });
+}
+
+export const getCategoryById = (id: number) => {
+  return fetch(`${BASE_URL}${ApiRoutes.CATEGORY}/${id}`)
+    .then((res) => checkResponse<TCategoriesResponse>(res))
+    .then((data) => {
+      if (data.success) return data.data;
+
+      return Promise.reject(data);
+    });
+}
+
+export const getIngredients = () => {
+  return fetch(`${BASE_URL}${ApiRoutes.INGREDIENTS}`)
+    .then((res) => checkResponse<TIngredientsResponse>(res))
     .then((data) => {
       if (data.success) return data.data;
 
