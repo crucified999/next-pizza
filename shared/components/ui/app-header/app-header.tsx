@@ -10,7 +10,7 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
 
   return (
     <>
-    <header className="flex py-11">
+    <header id="page-header" className="flex py-11">
       <Link href="/">
         <div className='flex items-center gap-3.75 mr-18'>
           <img src="/logo.png" alt="logo" className="w-10 h-10" />

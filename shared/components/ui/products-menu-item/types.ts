@@ -1,3 +1,8 @@
+import { Category } from "@prisma/client";
+
 export type ProductsMenuItemUIProps = {
-  category: string;
+  id: number;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

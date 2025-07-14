@@ -1,9 +1,10 @@
 export type ProductUIProps = {
-  id: string;
+  id: number;
   title: string;
   price: number;
   image: string;
   description: string;
-  category: string;
-  amount: number;
+  categoryId: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

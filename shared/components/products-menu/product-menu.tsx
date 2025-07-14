@@ -1,35 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductsMenuUI } from "../ui/products-menu/product-menu";
-import { useAppSelector } from "../../services/store";
-import { selectSortedBy } from "../../slices/nextPizzaSlice";
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { fetchCategories, selectCategories, selectSortedBy } from "../../slices/nextPizzaSlice";
 
-const items = [
-  {
-    category: 'Все',
-  },
-  {
-    category: 'Мясные',
-  },
-  {
-    category: 'Острые',
-  },
-  {
-    category: 'Сладкие',
-  },
-  {
-    category: 'Вегетарианские',
-  },
-  {
-    category: 'С курицей',
-  }
-];
+// const items = [
+//   {
+//     category: 'Все',
+//   },
+//   {
+//     category: 'Мясные',
+//   },
+//   {
+//     category: 'Острые',
+//   },
+//   {
+//     category: 'Сладкие',
+//   },
+//   {
+//     category: 'Вегетарианские',
+//   },
+//   {
+//     category: 'С курицей',
+//   }
+// ];
 
 
 const sortCategories = [ "популярности", "цене", "рейтингу" ];
 
 export const ProductMenu: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectCategories);
+
   const [isSortingMenuShown, setIsSortingMenuShown] = useState(false);
   const sortedBy = useAppSelector(selectSortedBy);
 
@@ -43,7 +46,11 @@ export const ProductMenu: React.FC = () => {
     setIsSortingMenuShown(false);
   }
 
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
   return (
-    <ProductsMenuUI currentSortingCategory={sortedBy} title="Все пиццы" items={items} sortCategories={sortedByCategory} isSortingMenuShown={isSortingMenuShown} onHover={onHover} onLeave={onLeave} />
+    <ProductsMenuUI currentSortingCategory={sortedBy} title="Все пиццы" items={categories} sortCategories={sortedByCategory} isSortingMenuShown={isSortingMenuShown} onHover={onHover} onLeave={onLeave} />
   )
 }
