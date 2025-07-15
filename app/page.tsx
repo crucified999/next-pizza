@@ -12,7 +12,7 @@ export default function Home() {
     <Provider store={store}>
       <AppHeader />
       <ProductMenu />
-      <main className="grid grid-cols-[min-content_1fr] gap-15 mt-15">
+      <main className="grid grid-cols-[min-content_1fr] gap-15 mt-10">
         <Filters />
         <ProductList />
       </main>

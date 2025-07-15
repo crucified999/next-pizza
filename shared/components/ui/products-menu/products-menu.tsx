@@ -4,8 +4,9 @@ import { ProductsMenuItemUI } from "../products-menu-item";
 import { SortingMenuUI } from "../sorting-menu";
 import { ProductsMenuUIProps } from "./types";
 import { cn } from "@/lib/utils";
+import { CartButton } from "@/shared/components/cart-button";
 
-export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ currentSortingCategory, items, title, sortCategories, isSortingMenuShown, onHover, onLeave }) => {
+export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [showLogo, setShowLogo] = useState(false);
 
@@ -23,17 +24,27 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ currentSortingCa
   }, []);
 
   return (
-    <div ref={menuRef} className={cn("flex sticky top-0 bg-white z-10 gap-5 mt-10 items-center justify-between")}> 
-      
+    <div
+      ref={menuRef}
+      className={cn(
+        "flex py-2 sticky top-0 bg-white z-10 gap-5 mt-10 items-center justify-between"
+      )}
+    >
       <div className="flex relative items-center">
-        {/* <h1 className="text-4xl font-bold">{title}</h1> */}
-        {showLogo && (
-          <img src="/logo.png" alt="logo" className="w-7 h-7 transition-opacity duration-300" />
-        )}
+        <img
+          src="/logo.png"
+          alt="logo"
+          className={cn(
+            "w-7 h-7 block transition-all duration-300",
+            showLogo
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-4 pointer-events-none"
+          )}
+        />
         <ul
           className={cn(
             "py-1 px-2 rounded-2xl flex justify-start gap-1.25  transition-all duration-300",
-            showLogo ? "ml-2 bg-white" : "ml-0 bg-[#F9FAFB]"
+            showLogo ? "ml-5 bg-white" : "ml-0 bg-[#F9FAFB]"
           )}
         >
           {items.map((item) => (
@@ -45,10 +56,15 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ currentSortingCa
               updatedAt={item.updatedAt}
             />
           ))}
-          <ProductsMenuItemUI id={0} name="Ещё" createdAt={new Date()} updatedAt={new Date()} />
+          <ProductsMenuItemUI
+            id={0}
+            name="Ещё"
+            createdAt={new Date()}
+            updatedAt={new Date()}
+          />
         </ul>
       </div>
-      <div onMouseEnter={onHover} onMouseLeave={onLeave} className="relative flex items-center gap-2">
+      {/* <div onMouseEnter={onHover} onMouseLeave={onLeave} className="relative flex items-center gap-2">
         <Button variant="ghost" className={cn("bg-[#F9FAFB] py-5 font-bold cursor-pointer rounded-2xl", showLogo && "bg-white")}>
           <img src="/sort.svg" alt="sort" className="w-4 h-4" />
           <span>Сортировка по: </span>
@@ -57,7 +73,17 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ currentSortingCa
         <SortingMenuUI isShown={isSortingMenuShown} categories={
           sortCategories.map((category) => ({ category }))
         } />
+      </div> */}
+      <div
+        className={cn(
+          "transition-all duration-300 min-w-[130px] flex justify-end",
+          showLogo
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        )}
+      >
+        <CartButton />
       </div>
     </div>
-  )
-}
+  );
+};

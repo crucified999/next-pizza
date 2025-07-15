@@ -5,11 +5,16 @@ export async function GET() {
   const products = await prisma.product.findMany({
     select: {
       id: true,
-      title: true,
-      price: true,
+      name: true,
       image: true,
       categoryId: true,
-      ingredients: true,
+      items: {
+        select: {
+          price: true,
+          size: true,
+          pizzaType: true,
+        }
+      }
     }
   });
 

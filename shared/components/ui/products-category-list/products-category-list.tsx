@@ -4,12 +4,14 @@ import { Title } from "../title/title";
 
 const Category: Record<number, string> = {
   1: "Пиццы",
-  2: "Напитки",
-  3: "Десерты",
-  4: "Салаты",
-  5: "Закуски",
-  6: "Сеты",
-  7: "Сыры",
+  2: "Комбо",
+  3: "Закуски",
+  4: "Коктейли",
+  5: "Кофе",
+  6: "Напитки",
+  7: "Десерты",
+  8: "Соусы",
+  9: "Другие товары",
 }
 
 export const ProductCategoryListUI: React.FC<ProductCategoryListUIProps> = ({ category }) => {

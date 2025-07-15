@@ -1,6 +1,6 @@
 import { AppHeaderUIProps } from "./types";
 import { Button } from "@/shared/components/ui/button/button";
-import { Input } from "@/shared/components/ui/input/input";
+import { CartButton } from "@/shared/components/cart-button";
 import { ProfileMenuUI } from "../profile-menu";
 import { SearchInputUI } from "../search-input";
 import React from 'react';
@@ -28,7 +28,7 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
         { isAuthorized ? 
         
         <div onMouseLeave={onLeave} onMouseEnter={onHover} className="relative">
-          <Button variant='outline' className='flex items-center gap-2.5 text-[16px] border border-orange-400 text-orange-400 font-[600]'>
+          <Button variant='outline' className='flex items-center rounded-2xl h-[50px] gap-2.5 text-[16px] border border-orange-500 text-orange-500 font-[600]'>
             <img src="/user.svg" alt="cart" className="w-4 h-4" />
             <span>Профиль</span>
           </Button>
@@ -37,31 +37,14 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
 
         :
 
-        <Button variant='outline' className='flex items-center gap-2.5 text-[16px] border border-orange-400 text-orange-400 font-[600]'>
+        <Button variant='outline' className='flex items-center rounded-2xl gap-2.5 text-[16px] border border-orange-500 text-orange-500 font-[600]'>
           <img src="/user.svg" alt="cart" className="w-4 h-4" />
           <span>Войти</span>
         </Button>
 
         }
         
-
-        { counter ? 
-                  <Button variant='default' className="bg-orange-400 font-bold text-[16px] w-[130px]">
-                    <span>{price} ₽ | </span>
-                    <img src="/cart.svg" alt="cart" className="w-4 h-4" />
-                    <span>{counter}</span>
-                  </Button> 
-                  :
-
-                  <div>
-
-                    <Button variant='outline' className='border border-orange-400'>
-                      <img src="/cart.svg" alt="cart" className="w-4 h-4 [filter:brightness(0)_saturate(100%)_invert(48%)_sepia(79%)_saturate(2476%)_hue-rotate(346deg)_brightness(118%)_contrast(119%)]" />
-                    </Button> 
-
-                  </div>
-                  
-        }
+        <CartButton />
         
       </div>
     </header>
