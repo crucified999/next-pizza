@@ -1,1 +1,0 @@
-export { ProductsMenuItemUI } from "./products-menu-item";

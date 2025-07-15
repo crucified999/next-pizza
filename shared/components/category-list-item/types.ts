@@ -1,5 +1,5 @@
 import { TCategoryWithRelations } from "@/types/prisma";
 
-export type ProductsMenuItemProps = {
+export type CategoryListItemProps = {
   category: Omit<TCategoryWithRelations, "products">;
-}
+};

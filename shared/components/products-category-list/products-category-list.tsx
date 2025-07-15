@@ -1,21 +1,34 @@
 import { useAppDispatch, useAppSelector } from "@/shared/services/store";
 import { ProductCategoryListUI } from "../ui/products-category-list";
-import { fetchIngredients, fetchProducts, selectProducts, setCurrentCategory } from "@/shared/services/slices/nextPizzaSlice";
+import {
+  fetchIngredients,
+  fetchProducts,
+  selectIsLoading,
+  selectProducts,
+  setCurrentCategory,
+} from "@/shared/services/slices/nextPizzaSlice";
 import { useEffect } from "react";
 import { Category } from "@prisma/client";
 import { ProductUIProps } from "../ui/product/types";
- 
-export const ProductCategoryList = ({ category }: { category: Category & { products: ProductUIProps[] } }) => {
+import { SkeletonProduct } from "../ui/skeleton/skeleton-product";
 
+export const ProductCategoryList = ({
+  category,
+  loading,
+}: {
+  category: Category & { products: ProductUIProps[] };
+  loading: boolean;
+}) => {
   const dispatch = useAppDispatch();
-  // const category = useAppSelector(selectCategoryById);
+  const isLoading = useAppSelector(selectIsLoading);
 
-  useEffect(() => {
-    Promise.all([
-      dispatch(fetchProducts()),
-      dispatch(fetchIngredients()),
-    ])
-  }, [dispatch]);
+  // console.log(isLoading);
+
+  // useEffect(() => {
+  //   dispatch(fetchProducts())
+  // }, [dispatch]);
+
+  if (loading) return <SkeletonProduct />;
 
   useEffect(() => {
     const categoryList = document.getElementById(`category-${category.id}`);
@@ -32,10 +45,8 @@ export const ProductCategoryList = ({ category }: { category: Category & { produ
       { threshold: 0 }
     );
 
-
     return () => observer.disconnect();
-    
   }, []);
 
   return <ProductCategoryListUI category={category} />;
-}
+};

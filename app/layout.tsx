@@ -4,11 +4,10 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 
 const geistNunito = Nunito({
-  variable: '--font-geist-nunito',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: "--font-geist-nunito",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
-
 
 export const metadata: Metadata = {
   title: "Next Pizza",
@@ -22,10 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistNunito.className} antialiased px-15`}
-      >
-        {children}       
+      <body className={`${geistNunito.className} antialiased px-15`}>
+        {children}
       </body>
     </html>
   );

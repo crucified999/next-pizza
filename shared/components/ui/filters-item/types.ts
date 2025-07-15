@@ -1,3 +1,3 @@
 export type FiltersItemUIProps = {
-  type: string;
+  name: string;
 }

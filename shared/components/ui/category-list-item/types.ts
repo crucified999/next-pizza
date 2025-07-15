@@ -1,6 +1,4 @@
-import { Category } from "@prisma/client";
-
-export type ProductsMenuItemUIProps = {
+export type CategoryListItemUIProps = {
   id: number;
   name: string;
   isActive: boolean;

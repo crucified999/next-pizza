@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ProductsMenuUIProps } from "./types";
-import { ProductsMenuItem } from "@/shared/components/products-menu-item";
+import { CategoryListUIProps } from "./types";
+import { CategoryListItem } from "@/shared/components/category-list-item";
 import { cn } from "@/lib/utils";
 import { CartButton } from "@/shared/components/cart-button";
+import { SkeletonCategoryList } from "../skeleton/skeleton-category-list";
 
-export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
+export const CategoryListUI: React.FC<CategoryListUIProps> = ({
+  items,
+  loading,
+}) => {
   const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
@@ -20,7 +24,6 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
     observer.observe(header);
 
     return () => observer.disconnect();
-    
   }, []);
 
   return (
@@ -40,20 +43,28 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
               : "opacity-0 -translate-x-4 pointer-events-none hidden"
           )}
         />
-        <ul
-          className={cn(
-            "py-1 px-2 rounded-2xl flex gap-1.25  transition-all duration-300",
-            showLogo ? "ml-3 bg-white" : "ml-0 bg-[#F9FAFB]"
-          )}
-        >
-          {items.map((item) => (
-            <ProductsMenuItem
-              key={item.id}
-              category={item}
+        {loading ? (
+          <SkeletonCategoryList />
+        ) : (
+          <ul
+            className={cn(
+              "py-2 px-2 rounded-2xl flex gap-1.25  transition-all duration-300",
+              showLogo ? "ml-3 bg-white" : "ml-0 bg-[#F9FAFB]"
+            )}
+          >
+            {items.map((item) => (
+              <CategoryListItem key={item.id} category={item} />
+            ))}
+            <CategoryListItem
+              category={{
+                id: 0,
+                name: "Ещё",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              }}
             />
-          ))}
-          <ProductsMenuItem category={{ id: 0, name: "Ещё", createdAt: new Date(), updatedAt: new Date() }} />
-        </ul>
+          </ul>
+        )}
       </div>
       {/* <div onMouseEnter={onHover} onMouseLeave={onLeave} className="relative flex items-center gap-2">
         <Button variant="ghost" className={cn("bg-[#F9FAFB] py-5 font-bold cursor-pointer rounded-2xl", showLogo && "bg-white")}>

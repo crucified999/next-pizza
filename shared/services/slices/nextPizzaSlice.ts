@@ -39,14 +39,17 @@ export const fetchProducts = createAsyncThunk(
   "nextPizza/fetchProducts",
   getProducts
 );
+
 export const fetchCategories = createAsyncThunk(
   "nextPizza/fetchCategories",
   getCategories
 );
+
 export const fetchIngredients = createAsyncThunk(
   "nextPizza/fetchIngredients",
   getIngredients
 );
+
 export const fetchCategoryById = createAsyncThunk(
   "nextPizza/fetchCategoryById",
   getCategoryById
@@ -105,6 +108,7 @@ export const nextPizzaSlice = createSlice({
     selectSortedBy: (state) => state.sortedBy,
     selectTotalPrice: (state) => state.totalPrice,
     selectTotalCounter: (state) => state.totalCounter,
+    selectIsLoading: (state) => state.isLoading,
   },
 });
 
@@ -118,6 +122,7 @@ export const {
   selectIngredients,
   selectTotalPrice,
   selectTotalCounter,
+  selectIsLoading,
 } = nextPizzaSlice.selectors;
 
 export default nextPizzaSlice.reducer;

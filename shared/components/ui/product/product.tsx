@@ -1,6 +1,9 @@
 import { ProductUIProps } from "./types";
 import { Title } from "../title/title";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { useAppSelector } from "@/shared/services/store";
+import { selectIsLoading } from "@/shared/services/slices/nextPizzaSlice";
+import { SkeletonProduct } from "../skeleton/skeleton-product";
 
 export const ProductUI: React.FC<ProductUIProps> = ({
   id,
@@ -10,7 +13,6 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   items,
   categoryId,
 }) => {
-  
   return (
     <article className="flex flex-col justify-between max-h-[430px] gap-4">
       <div>
@@ -22,8 +24,8 @@ export const ProductUI: React.FC<ProductUIProps> = ({
           />
         </div>
         <div>
-          <Title as="h3" text={name} className="text-[22px]" />
-          <p className="text-[14px] text-black/70">
+          <Title as="h3" text={name} className="text-[22px] mt-3" />
+          <p className="text-[14px] text-black/60 mt-2">
             {ingredients
               .map((ingredient, index) =>
                 index === 0 ? ingredient.name : ingredient.name.toLowerCase()
