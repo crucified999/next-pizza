@@ -10,7 +10,7 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   items,
   categoryId,
 }) => {
-  console.log(items);
+  
   return (
     <article className="flex flex-col justify-between max-h-[430px] gap-4">
       <div>

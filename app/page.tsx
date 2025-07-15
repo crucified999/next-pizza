@@ -1,7 +1,7 @@
 "use client";
 
 import { AppHeader } from "@/shared/components/app-header";
-import { ProductMenu } from "@/shared/components/products-menu/product-menu";
+import { ProductMenu } from "@/shared/components/products-menu/products-menu";
 import { Provider } from "react-redux";
 import { store } from "@/shared/services/store";
 import { Filters } from "@/shared/components/filters";

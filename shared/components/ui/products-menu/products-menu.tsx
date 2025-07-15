@@ -1,31 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button } from "../button/button";
-import { ProductsMenuItemUI } from "../products-menu-item";
-import { SortingMenuUI } from "../sorting-menu";
+import React, { useEffect, useState } from "react";
 import { ProductsMenuUIProps } from "./types";
+import { ProductsMenuItem } from "@/shared/components/products-menu-item";
 import { cn } from "@/lib/utils";
 import { CartButton } from "@/shared/components/cart-button";
 
 export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
-  const menuRef = useRef<HTMLDivElement>(null);
   const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
     const header = document.getElementById("page-header");
-    console.log(header);
+
     if (!header) return;
 
     const observer = new window.IntersectionObserver(
       ([entry]) => setShowLogo(!entry.isIntersecting),
       { threshold: 0 }
     );
+
     observer.observe(header);
+
     return () => observer.disconnect();
+    
   }, []);
 
   return (
     <div
-      ref={menuRef}
       className={cn(
         "flex py-2 sticky top-0 bg-white z-10 gap-5 mt-10 items-center justify-between"
       )}
@@ -38,30 +37,22 @@ export const ProductsMenuUI: React.FC<ProductsMenuUIProps> = ({ items }) => {
             "w-7 h-7 block transition-all duration-300",
             showLogo
               ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-4 pointer-events-none"
+              : "opacity-0 -translate-x-4 pointer-events-none hidden"
           )}
         />
         <ul
           className={cn(
-            "py-1 px-2 rounded-2xl flex justify-start gap-1.25  transition-all duration-300",
-            showLogo ? "ml-5 bg-white" : "ml-0 bg-[#F9FAFB]"
+            "py-1 px-2 rounded-2xl flex gap-1.25  transition-all duration-300",
+            showLogo ? "ml-3 bg-white" : "ml-0 bg-[#F9FAFB]"
           )}
         >
           {items.map((item) => (
-            <ProductsMenuItemUI
+            <ProductsMenuItem
               key={item.id}
-              id={item.id}
-              name={item.name}
-              createdAt={item.createdAt}
-              updatedAt={item.updatedAt}
+              category={item}
             />
           ))}
-          <ProductsMenuItemUI
-            id={0}
-            name="Ещё"
-            createdAt={new Date()}
-            updatedAt={new Date()}
-          />
+          <ProductsMenuItem category={{ id: 0, name: "Ещё", createdAt: new Date(), updatedAt: new Date() }} />
         </ul>
       </div>
       {/* <div onMouseEnter={onHover} onMouseLeave={onLeave} className="relative flex items-center gap-2">

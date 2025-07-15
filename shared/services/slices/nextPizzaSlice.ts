@@ -5,12 +5,13 @@ import {
   getIngredients,
   getCategoryById,
 } from "@/shared/services/api/api-client";
-import { TIngredient } from "@/shared/services/api/types";
+import { TCategory, TIngredient } from "@/shared/services/api/types";
 import { TCategoryWithRelations, TProductWithRelations } from "@/types/prisma";
 
 type NextPizzaState = {
   products: TProductWithRelations[];
   categories: TCategoryWithRelations[];
+  currentCategory: TCategory;
   ingredients: TIngredient[];
   totalPrice: number;
   totalCounter: number;
@@ -22,6 +23,10 @@ type NextPizzaState = {
 const initialState: NextPizzaState = {
   products: [],
   categories: [],
+  currentCategory: {
+    id: 1,
+    name: "Пиццы",
+  },
   ingredients: [],
   totalPrice: 0,
   totalCounter: 0,
@@ -51,8 +56,8 @@ export const nextPizzaSlice = createSlice({
   name: "nextPizza",
   initialState,
   reducers: {
-    setSortingCategory: (state, action: PayloadAction<string>) => {
-      state.sortedBy = action.payload;
+    setCurrentCategory: (state, action: PayloadAction<TCategory>) => {
+      state.currentCategory = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -95,6 +100,7 @@ export const nextPizzaSlice = createSlice({
   selectors: {
     selectProducts: (state) => state.products,
     selectCategories: (state) => state.categories,
+    selectCurrentCategory: (state) => state.currentCategory,
     selectIngredients: (state) => state.ingredients,
     selectSortedBy: (state) => state.sortedBy,
     selectTotalPrice: (state) => state.totalPrice,
@@ -102,11 +108,12 @@ export const nextPizzaSlice = createSlice({
   },
 });
 
-export const { setSortingCategory } = nextPizzaSlice.actions;
+export const { setCurrentCategory } = nextPizzaSlice.actions;
 
 export const {
   selectProducts,
   selectCategories,
+  selectCurrentCategory,
   selectSortedBy,
   selectIngredients,
   selectTotalPrice,

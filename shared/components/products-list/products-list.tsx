@@ -2,38 +2,50 @@ import { useAppDispatch, useAppSelector } from "@/shared/services/store";
 import { ProductListUI } from "../ui/products-list/products-list";
 import { useEffect } from "react";
 import {
-  fetchIngredients,
   fetchCategories,
   selectCategories,
-  selectIngredients,
-  selectProducts,
+  setCurrentCategory,
 } from "@/shared/services/slices/nextPizzaSlice";
 import { fetchProducts } from "@/shared/services/slices/nextPizzaSlice";
 
-// const products = [
-//   {
-//     id: "1",
-//     title: "Пицца",
-//     price: 100,
-//     image: "/pizza.avif",
-//     description: "Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус альфредо, чеснок",
-//     category: "Пицца",
-//     amount: 0
-//   },
-//   {
-//     id: "2",
-//     title: "Пицца 2",
-//     price: 200,
-//     image: "/pizza.avif",
-//     description: "Описание",
-//     category: "Пицца",
-//     amount: 1
-//   },
-// ]
 
 export const ProductList = () => {
+
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
+
+  useEffect(() => {
+    if (!categories.length) return;
+
+    const handler = (entries: IntersectionObserverEntry[]) => {
+      // Найти первую видимую секцию
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+      if (visible.length > 0) {
+        const id = visible[0].target.id.replace("category-", "");
+        const category = categories.find(cat => String(cat.id) === id);
+
+        if (category) {
+          dispatch(setCurrentCategory(category));
+        }
+      }
+    };
+
+    const observer = new window.IntersectionObserver(handler, {
+      root: null,
+      threshold: 0.5, // секция видна хотя бы наполовину
+    });
+
+    categories.forEach(category => {
+      const el = document.getElementById(`category-${category.id}`);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+
+  }, [categories, dispatch]);
 
   useEffect(() => {
     dispatch(fetchCategories());

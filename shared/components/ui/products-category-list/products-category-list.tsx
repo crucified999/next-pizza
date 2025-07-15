@@ -16,18 +16,18 @@ const Category: Record<number, string> = {
 
 export const ProductCategoryListUI: React.FC<ProductCategoryListUIProps> = ({ category }) => {
   return (
-    <div className="flex flex-col gap-13">
+    <section id={`category-${category.id}`} className="flex flex-col gap-13">
       {
         category.products.length > 0 &&
         <>
           <Title as="h3" text={Category[category.id]} className="text-[36px]"/>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(285px,1fr))] gap-13">
-          {category.products.map((product) => (
-            <ProductUI key={product.id} {...product} />
-            ))}
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(285px,1fr))] gap-13">
+            {category.products.map((product) => (
+              <ProductUI key={product.id} {...product} />
+              ))}
           </div>
         </>
       }
-    </div>
+    </section>
   )
 }
