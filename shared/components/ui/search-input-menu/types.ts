@@ -1,6 +1,6 @@
 import { SearchInputMenuItemUIProps } from "../search-input-menu-item/types";
 
 export type SearchInputMenuUIProps = {
-  items: SearchInputMenuItemUIProps[];  
+  items: SearchInputMenuItemUIProps[];
   isFocused: boolean;
-}
+};

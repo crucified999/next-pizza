@@ -1,0 +1,1 @@
+export { SearchInputMenu } from "./search-input-menu";

@@ -3,6 +3,7 @@ import { Button } from "@/shared/components/ui/button/button";
 import { CartButton } from "@/shared/components/cart-button";
 import { ProfileMenuUI } from "../profile-menu";
 import { SearchInputUI } from "../search-input";
+import { SearchInput } from "../../search-input";
 import React from 'react';
 import Link from "next/link";
 
@@ -22,7 +23,8 @@ export const AppHeaderUI: React.FC<AppHeaderUIProps> = ({ price, counter, isAuth
           </div>
         </div>
       </Link>
-      <SearchInputUI />
+      {/* <SearchInputUI /> */}
+      <SearchInput />
       <div className="flex items-center gap-4 ml-[21px]">
 
         { isAuthorized ? 

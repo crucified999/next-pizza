@@ -1,4 +1,5 @@
 export type SearchInputMenuItemUIProps = {
-  title: string;
+  id: number;
+  name: string;
   image: string;
-}
+};
