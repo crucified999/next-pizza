@@ -4,6 +4,7 @@ import { MinusIcon, PlusIcon } from "lucide-react";
 import { useAppSelector } from "@/shared/services/store";
 import { selectIsLoading } from "@/shared/services/slices/nextPizzaSlice";
 import { SkeletonProduct } from "../skeleton/skeleton-product";
+import Link from "next/link";
 
 export const ProductUI: React.FC<ProductUIProps> = ({
   id,
@@ -16,13 +17,13 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   return (
     <article className="flex flex-col justify-between max-h-[430px] gap-4">
       <div>
-        <div className="cursor-pointer flex items-center justify-center py-6 bg-[#FFF7EE] rounded-xl">
+        <Link href={`/product/${id}`} className="cursor-pointer flex items-center justify-center py-6 bg-[#FFF7EE] rounded-xl">
           <img
             src={image}
             alt={name}
             className="w-[211px] h-[211px] object-cover transition-transform duration-250 hover:translate-y-1"
           />
-        </div>
+        </Link>
         <div>
           <Title as="h3" text={name} className="text-[22px] mt-3" />
           <p className="text-[14px] text-black/60 mt-2">

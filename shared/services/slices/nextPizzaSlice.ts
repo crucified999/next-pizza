@@ -4,6 +4,7 @@ import {
   getProducts,
   getIngredients,
   getCategoryById,
+  getProductById,
 } from "@/shared/services/api/api-client";
 import { TCategory, TIngredient } from "@/shared/services/api/types";
 import { TCategoryWithRelations, TProductWithRelations } from "@/types/prisma";
@@ -13,6 +14,7 @@ type NextPizzaState = {
   categories: TCategoryWithRelations[];
   currentCategory: TCategory;
   ingredients: TIngredient[];
+  modalProduct: TProductWithRelations | null;
   totalPrice: number;
   totalCounter: number;
   sortedBy: string;
@@ -28,6 +30,7 @@ const initialState: NextPizzaState = {
     name: "Пиццы",
   },
   ingredients: [],
+  modalProduct: null,
   totalPrice: 0,
   totalCounter: 0,
   sortedBy: "популярности",
@@ -38,6 +41,11 @@ const initialState: NextPizzaState = {
 export const fetchProducts = createAsyncThunk(
   "nextPizza/fetchProducts",
   getProducts
+);
+
+export const fetchProductById = createAsyncThunk(
+  "nextPizza/fetchProductById",
+  getProductById
 );
 
 export const fetchCategories = createAsyncThunk(
@@ -98,6 +106,17 @@ export const nextPizzaSlice = createSlice({
         state.isLoading = false;
         state.error =
           action.error.message || "Ошибка при загрузке ингредиентов";
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.modalProduct = action.payload[0];
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Ошибка при загрузке продукта";
       });
   },
   selectors: {
@@ -109,6 +128,7 @@ export const nextPizzaSlice = createSlice({
     selectTotalPrice: (state) => state.totalPrice,
     selectTotalCounter: (state) => state.totalCounter,
     selectIsLoading: (state) => state.isLoading,
+    selectModalProduct: (state) => state.modalProduct,
   },
 });
 
@@ -123,6 +143,7 @@ export const {
   selectTotalPrice,
   selectTotalCounter,
   selectIsLoading,
+  selectModalProduct,
 } = nextPizzaSlice.selectors;
 
 export default nextPizzaSlice.reducer;

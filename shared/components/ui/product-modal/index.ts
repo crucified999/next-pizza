@@ -1,0 +1,1 @@
+export { ProductModalUI } from './product-modal';

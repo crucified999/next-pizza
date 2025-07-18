@@ -62,3 +62,15 @@ export const getIngredients = () => {
       return Promise.reject(data);
     });
 }
+
+export const getProductById = (id: number) => {
+  return fetch(`${BASE_URL}${ApiRoutes.PRODUCT}/${id}`)
+    .then((res) => checkResponse<TProductsResponse>(res))
+    .then((data) => {
+      if (data.success) return data.data;
+
+      return Promise.reject(data);
+    });
+} 
+
+console.log(getProductById(37));
