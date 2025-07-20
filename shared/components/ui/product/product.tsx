@@ -17,7 +17,10 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   return (
     <article className="flex flex-col justify-between max-h-[430px] gap-4">
       <div>
-        <Link href={`/product/${id}`} className="cursor-pointer flex items-center justify-center py-6 bg-[#FFF7EE] rounded-xl">
+        <Link
+          href={`/product/${id}`}
+          className="cursor-pointer flex items-center justify-center py-6 bg-[#FFF7EE] rounded-xl"
+        >
           <img
             src={image}
             alt={name}

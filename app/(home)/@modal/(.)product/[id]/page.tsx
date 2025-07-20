@@ -6,15 +6,17 @@ import { Modal } from "@/shared/components/modal/modal";
 import { Provider } from "react-redux";
 import { store } from "@/shared/services/store";
 import { ProductModalUI } from "@/shared/components/ui/product-modal/product-modal";
+import { use } from "react";
 
 export default async function ProductModalPage({
-  params: { id },
+  params,
 }: {
   params: { id: string };
 }) {
+  
   const product = await prisma.product.findFirst({
     where: {
-      id: +id,
+      id: +params.id,
     },
     include: {
       ingredients: true,
@@ -22,16 +24,13 @@ export default async function ProductModalPage({
     },
   });
 
-  console.log('Product:', product);
   // if (!product) {
   //   return notFound();
   // }
 
   return (
-    
-      <Modal>
-        <ProductModalUI product={product} />
-      </Modal>
-    
+    <Modal>
+      <ProductModalUI product={product} />
+    </Modal>
   );
 }

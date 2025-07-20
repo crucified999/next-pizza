@@ -3,9 +3,11 @@
 import { ProductModalUI } from "@/shared/components/ui/product-modal/product-modal";
 import { fetchProductById, selectModalProduct } from "@/shared/services/slices/nextPizzaSlice";
 import { useAppDispatch, useAppSelector } from "@/shared/services/store";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 
-export default function ProductModal({ params }: { params: { id: string } }) {
+export default function ProductModal({ params }: { params: Promise<{ id: string }> }) {
+
+  const { id } = use(params);
 
   const dispatch = useAppDispatch();
 
@@ -14,7 +16,7 @@ export default function ProductModal({ params }: { params: { id: string } }) {
   console.log(product);
 
   useEffect(() => {
-    dispatch(fetchProductById(+params.id));
+    dispatch(fetchProductById(+id));
   }, [dispatch]);
 
   return (

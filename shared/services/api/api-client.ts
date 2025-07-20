@@ -19,6 +19,10 @@ type TProductsResponse = TServerResponse<{
    data: TProductWithRelations[];
 }>;
 
+type TSingleProductResponse = TServerResponse<{
+  data: TProductWithRelations;
+}>
+
 type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
@@ -65,7 +69,7 @@ export const getIngredients = () => {
 
 export const getProductById = (id: number) => {
   return fetch(`${BASE_URL}${ApiRoutes.PRODUCT}/${id}`)
-    .then((res) => checkResponse<TProductsResponse>(res))
+    .then((res) => checkResponse<TSingleProductResponse>(res))
     .then((data) => {
       if (data.success) return data.data;
 

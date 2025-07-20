@@ -112,7 +112,10 @@ export const nextPizzaSlice = createSlice({
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.modalProduct = action.payload[0];
+        state.modalProduct = action.payload;
+
+        console.log(state.modalProduct);
+        console.log("Action Payload: ", action.payload);
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.isLoading = false;
