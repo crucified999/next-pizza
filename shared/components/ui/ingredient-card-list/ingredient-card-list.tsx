@@ -7,8 +7,8 @@ export const IngredientCardListUI: React.FC<IngredientCardListUIProps> = ({
 }) => {
   return (
     <ul className="grid grid-cols-3 gap-2 mt-2 max-h-[300px] overflow-y-auto">
-      {ingredients.map((ingredient) => (
-        <IngredientCard {...ingredient} />
+      {ingredients.map((ingredient, index) => (
+        <IngredientCard key={index} {...ingredient} />
       ))}
     </ul>
   );

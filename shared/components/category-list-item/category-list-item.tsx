@@ -6,6 +6,7 @@ import {
 import { CategoryListItemUI } from "../ui/category-list-item";
 import { CategoryListItemProps } from "./types";
 import { scrollToCategory } from "@/lib/utils";
+import { useEffect } from "react";
 
 export const CategoryListItem: React.FC<CategoryListItemProps> = ({ 
   category,

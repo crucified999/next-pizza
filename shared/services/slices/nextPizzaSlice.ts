@@ -15,6 +15,8 @@ type NextPizzaState = {
   currentCategory: TCategory;
   ingredients: TIngredient[];
   modalProduct: TProductWithRelations | null;
+  orderPizzaSize: number;
+  orderPizzaType: number;
   totalPrice: number;
   totalCounter: number;
   sortedBy: string;
@@ -31,6 +33,8 @@ const initialState: NextPizzaState = {
   },
   ingredients: [],
   modalProduct: null,
+  orderPizzaSize: 30,
+  orderPizzaType: 1,
   totalPrice: 0,
   totalCounter: 0,
   sortedBy: "популярности",
@@ -70,6 +74,14 @@ export const nextPizzaSlice = createSlice({
     setCurrentCategory: (state, action: PayloadAction<TCategory>) => {
       state.currentCategory = action.payload;
     },
+
+    setPizzaSize: (state, action: PayloadAction<number>) => {
+      state.orderPizzaSize = action.payload;
+    },
+
+    setPizzaType: (state, action: PayloadAction<number>) => {
+      state.orderPizzaType = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -132,10 +144,12 @@ export const nextPizzaSlice = createSlice({
     selectTotalCounter: (state) => state.totalCounter,
     selectIsLoading: (state) => state.isLoading,
     selectModalProduct: (state) => state.modalProduct,
+    selectPizzaSize: (state) => state.orderPizzaSize,
+    selectPizzaType: (state) => state.orderPizzaType,
   },
 });
 
-export const { setCurrentCategory } = nextPizzaSlice.actions;
+export const { setCurrentCategory, setPizzaSize, setPizzaType } = nextPizzaSlice.actions;
 
 export const {
   selectProducts,
@@ -147,6 +161,8 @@ export const {
   selectTotalCounter,
   selectIsLoading,
   selectModalProduct,
+  selectPizzaSize,
+  selectPizzaType
 } = nextPizzaSlice.selectors;
 
 export default nextPizzaSlice.reducer;
