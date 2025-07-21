@@ -14,6 +14,7 @@ export const ProductUI: React.FC<ProductUIProps> = ({
   items,
   categoryId,
 }) => {
+  
   return (
     <article className="flex flex-col justify-between max-h-[430px] gap-4">
       <div>
@@ -57,10 +58,9 @@ export const ProductUI: React.FC<ProductUIProps> = ({
               <PlusIcon />
             </button>
           </div> */}
-        <button className="flex items-center gap-2 cursor-pointer px-5 py-2.5 bg-[#FFFAF4] rounded-2xl text-orange-500 transition-colors duration-250 hover:bg-[#ffebd3]">
-          <PlusIcon />
-          <span>Добавить</span>
-        </button>
+        <Link href={`/product/${id}`} className="flex items-center gap-2 cursor-pointer px-5 py-2.5 bg-[#FFFAF4] rounded-2xl text-orange-500 transition-colors duration-250 hover:bg-[#ffebd3]">
+          <span>{ items[0].pizzaType ? 'Выбрать' : 'В корзину' }</span>
+        </Link>
         {/* )} */}
       </footer>
     </article>

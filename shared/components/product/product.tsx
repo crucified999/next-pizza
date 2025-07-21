@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductUI } from "../ui/product/product";
 
 export const Product: React.FC = () => {

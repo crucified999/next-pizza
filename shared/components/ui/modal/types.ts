@@ -1,4 +1,4 @@
 export type ModalUIProps = {
   children: React.ReactNode;
-  onOpenChange: () => void;
+  onClose: () => void;
 };

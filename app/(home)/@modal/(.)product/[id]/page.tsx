@@ -1,12 +1,14 @@
 import { prisma } from "@/prisma/prisma-client";
 import { ModalUI } from "@/shared/components/ui/modal/modal";
 import { notFound } from "next/navigation";
-import ProductModal from "@/app/(home)/product/[id]/page";
+// import ProductModal from "@/app/(home)/product/[id]/page";
 import { Modal } from "@/shared/components/modal/modal";
 import { Provider } from "react-redux";
-import { store } from "@/shared/services/store";
+import { store, useAppSelector } from "@/shared/services/store";
 import { ProductModalUI } from "@/shared/components/ui/product-modal/product-modal";
 import { use } from "react";
+import { selectPizzaSize, selectPizzaType } from "@/shared/services/slices/nextPizzaSlice";
+import { getPizzaDetails } from "@/lib/utils";
 
 export default async function ProductModalPage({
   params,
@@ -24,9 +26,9 @@ export default async function ProductModalPage({
     },
   });
 
-  // if (!product) {
-  //   return notFound();
-  // }
+  if (!product) {
+    return <div>Not Found</div>
+  }
 
   return (
     <Modal>

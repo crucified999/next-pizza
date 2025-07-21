@@ -14,8 +14,8 @@ export const IngredientCardUI: React.FC<IngredientCardUIProps> = ({
     <li
       onClick={setIsActive}
       className={cn(
-        "relative flex border border-transparent flex-col items-center justify-center bg-white rounded-2xl p-2 cursor-pointer transition-shadow duration-200 shadow-xl hover:shadow-sm",
-        isActive && "border-orange-500"
+        "relative flex border border-transparent flex-col items-center justify-center bg-white rounded-2xl p-2 cursor-pointer transition-shadow duration-200 shadow-lg hover:shadow-sm",
+        isActive && "border-orange-500 shadow-none"
       )}
     >
       <img src={image} alt={`Ингредиент ${name}`} />

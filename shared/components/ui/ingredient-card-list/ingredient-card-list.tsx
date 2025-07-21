@@ -6,7 +6,7 @@ export const IngredientCardListUI: React.FC<IngredientCardListUIProps> = ({
   ingredients,
 }) => {
   return (
-    <ul className="grid grid-cols-3 gap-2 mt-2 max-h-[300px] overflow-y-auto">
+    <ul className="grid grid-cols-3 gap-2 mt-2 max-h-[300px] overflow-y-auto py-2">
       {ingredients.map((ingredient, index) => (
         <IngredientCard key={index} {...ingredient} />
       ))}
