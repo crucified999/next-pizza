@@ -76,5 +76,3 @@ export const getProductById = (id: number) => {
       return Promise.reject(data);
     });
 } 
-
-console.log(getProductById(37));

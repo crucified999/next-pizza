@@ -9,8 +9,10 @@ export const SearchInputMenuUI: React.FC<SearchInputMenuUIProps> = ({
   return (
     <div
       className={cn(
-        "py-3 absolute border border-transparent rounded-[10px] top-16 left-0 w-full bg-white z-30 transition-all duration-150 invisble opacity-0",
-        items.length && isFocused && "top-14 visible flex opacity-100"
+        "py-3 absolute border border-transparent rounded-[10px] top-16 left-0 w-full bg-white z-30 transition-all duration-300",
+        isFocused && items.length > 0
+          ? "top-14 visible flex opacity-100 pointer-events-auto"
+          : "opacity-0 invisible pointer-events-none"
       )}
     >
       <ul className="flex flex-col flex-1 gap-5">

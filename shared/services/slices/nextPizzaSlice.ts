@@ -81,7 +81,7 @@ export const nextPizzaSlice = createSlice({
 
     setPizzaType: (state, action: PayloadAction<number>) => {
       state.orderPizzaType = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -149,7 +149,8 @@ export const nextPizzaSlice = createSlice({
   },
 });
 
-export const { setCurrentCategory, setPizzaSize, setPizzaType } = nextPizzaSlice.actions;
+export const { setCurrentCategory, setPizzaSize, setPizzaType } =
+  nextPizzaSlice.actions;
 
 export const {
   selectProducts,
@@ -162,7 +163,7 @@ export const {
   selectIsLoading,
   selectModalProduct,
   selectPizzaSize,
-  selectPizzaType
+  selectPizzaType,
 } = nextPizzaSlice.selectors;
 
 export default nextPizzaSlice.reducer;

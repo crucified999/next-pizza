@@ -6,15 +6,22 @@ import {
 import { CategoryListItemUI } from "../ui/category-list-item";
 import { CategoryListItemProps } from "./types";
 import { scrollToCategory } from "@/lib/utils";
-import { useEffect } from "react";
 
-export const CategoryListItem: React.FC<CategoryListItemProps> = ({ 
+export const CategoryListItem: React.FC<CategoryListItemProps> = ({
   category,
 }) => {
-  const dispatch = useAppDispatch();  
+  const dispatch = useAppDispatch();
   const currentCategory = useAppSelector(selectCurrentCategory);
 
   const handleClick = () => {
+    console.log("Category clicked:", category.name);
+
+    // Устанавливаем флаг программного скролла ДО начала скролла
+    if ((window as any).setProgrammaticScroll) {
+      console.log("Setting programmatic scroll flag to true (from click)");
+      (window as any).setProgrammaticScroll(true);
+    }
+
     dispatch(setCurrentCategory(category));
     scrollToCategory(`category-${category.id}`);
   };

@@ -1,10 +1,25 @@
 import { Input } from "../input/input";
 import { SearchInputMenu } from "../../search-input-menu/search-input-menu";
 import { SearchInputUIProps } from "./types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export const SearchInputUI: React.FC<SearchInputUIProps> = ({ onChange, value }) => {
+export const SearchInputUI: React.FC<SearchInputUIProps> = ({
+  onChange,
+  value,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (isFocused) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFocused]);
 
   return (
     <>

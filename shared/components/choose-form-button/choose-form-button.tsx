@@ -21,8 +21,6 @@ export const ChooseFormButton: React.FC<ChooseFormButtonProps> = ({
   // const pizzaSize = useAppSelector(selectPizzaSize);
   // const pizzaType = useAppSelector(selectPizzaType);
 
-  // const isActive = buttonType === 'Теcто' ? pizzaType === value.value : pizzaSize === value.value;
-
   const handleClick = () => {
     const divEl = document.getElementById(`active-${buttonType}`);
 

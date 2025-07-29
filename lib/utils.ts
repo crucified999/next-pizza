@@ -1,24 +1,43 @@
-import { selectPizzaSize, selectPizzaType } from "@/shared/services/slices/nextPizzaSlice";
+import {
+  selectPizzaSize,
+  selectPizzaType,
+} from "@/shared/services/slices/nextPizzaSlice";
 import { useAppSelector } from "@/shared/services/store";
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { PizzaSize, pizzaSizes, PizzaType, pizzaTypeMapping } from "./constants";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import {
+  PizzaSize,
+  pizzaSizes,
+  PizzaType,
+  pizzaTypeMapping,
+} from "./constants";
 import { Ingredient, ProductItem } from "@prisma/client";
 import { Variant } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const scrollToCategory = (id: string) => {
+  console.log("scrollToCategory called for:", id);
   const headerOffset = 54; // высота вашего фиксированного меню в px
   const element = document.getElementById(id);
   if (element) {
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const elementPosition =
+      element.getBoundingClientRect().top + window.pageYOffset;
     const offsetPosition = elementPosition - headerOffset;
+
+    // Устанавливаем флаг программного скролла
+    if ((window as any).setProgrammaticScroll) {
+      console.log("Setting programmatic scroll flag to true");
+      (window as any).setProgrammaticScroll(true);
+    } else {
+      console.log("setProgrammaticScroll function not found");
+    }
+
     window.scrollTo({
       top: offsetPosition,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   }
 };
@@ -28,10 +47,11 @@ export const calcTotalPizzaPrice = (
   size: PizzaSize,
   items: ProductItem[],
   ingredients: Ingredient[],
-  selectedIngredients: Set<number>,
+  selectedIngredients: Set<number>
 ) => {
   const pizzaPrice =
-    items.find((item) => item.pizzaType === type && item.size === size)?.price || 0;
+    items.find((item) => item.pizzaType === type && item.size === size)
+      ?.price || 0;
 
   const totalIngredientsPrice = ingredients
     .filter((ingredient) => selectedIngredients.has(ingredient.id))
@@ -45,20 +65,33 @@ export const getPizzaDetails = (
   size: PizzaSize,
   items: ProductItem[],
   ingredients: Ingredient[],
-  selectedIngredients: Set<number>,
+  selectedIngredients: Set<number>
 ) => {
-  const totalPrice = calcTotalPizzaPrice(type, size, items, ingredients, selectedIngredients);
-  const textDetaills = `${size} см, ${pizzaTypeMapping[type]} ${type === 1 ? size : size - 5}`;
+  const totalPrice = calcTotalPizzaPrice(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients
+  );
+  const textDetaills = `${size} см, ${pizzaTypeMapping[type]} ${
+    type === 1 ? size : size - 5
+  }`;
 
   return { totalPrice, textDetaills };
 };
 
-export const getAvailablePizzaSizes = (type: PizzaType, items: ProductItem[]): Variant[] => {
+export const getAvailablePizzaSizes = (
+  type: PizzaType,
+  items: ProductItem[]
+): Variant[] => {
   const filteredPizzasByType = items.filter((item) => item.pizzaType === type);
 
   return pizzaSizes.map((item) => ({
     name: item.name,
     value: item.value,
-    disabled: !filteredPizzasByType.some((pizza) => Number(pizza.size) === Number(item.value)),
+    disabled: !filteredPizzasByType.some(
+      (pizza) => Number(pizza.size) === Number(item.value)
+    ),
   }));
 };

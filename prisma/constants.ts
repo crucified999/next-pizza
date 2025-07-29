@@ -1,6 +1,6 @@
 export const categories = [
   {
-    name: "Пицца",
+    name: "Пиццы",
   },
   {
     name: "Комбо",
