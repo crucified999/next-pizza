@@ -39,7 +39,7 @@ export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product }) => {
   );
 
   return (
-    <div className="grid grid-cols-[1.3fr_1fr]">
+    <div className="grid grid-cols-[1.3fr_1fr] w-full">
       <div className="flex place-items-center ml-3">
         <div className="flex-1 flex justify-center items-center">
           <img
@@ -49,36 +49,42 @@ export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product }) => {
           />
         </div>
       </div>
-      <div className="p-5 bg-[#fafafa] rounded-tr-xl rounded-br-xl">
+      <div className="grid grid-rows-[1fr_min-content] p-5 bg-[#fafafa] rounded-tr-xl rounded-br-xl">
         <Title as="h2" text={product.name} className="text-3xl" />
-        <span className="text-black/60 text-sm">{textDetaills}</span>
-        <p className="text-[16px] text-black/80 mt-2">
-          {product.ingredients
-            .map((ingredient, index) => {
-              if (index > 0) return ingredient.name.toLowerCase();
+        { product.categoryId === 1 && (
+          <>
+            <span className="text-black/60 text-sm">{textDetaills}</span>
+            <p className="text-[16px] text-black/80 mt-2">
+              {product.ingredients
+                .map((ingredient, index) => {
+                  if (index > 0) return ingredient.name.toLowerCase();
 
-              return ingredient.name;
-            })
-            .join(", ")}
-        </p>
-        <div className="flex flex-col gap2">
-          <ChooseForm
-            onClick={(value) => setSize(Number(value) as PizzaSize)}
-            formType="Размер"
-            items={product.items}
-            ingredients={product.ingredients}
-          />
-          <ChooseForm
-            onClick={(value) => setType(Number(value) as PizzaType)}
-            formType="Тесто"
-            items={product.items}
-            ingredients={product.ingredients}
-          />
-        </div>
-        <div className="p-3">
-          <Title as="h3" text="Добавить по вкусу" />
-          <InredientCardList />
-        </div>
+                  return ingredient.name;
+                })
+                .join(", ")}
+            </p>
+            <div className="flex flex-col gap2">
+              <ChooseForm
+                onClick={(value) => setSize(Number(value) as PizzaSize)}
+                formType="Размер"
+                items={product.items}
+                ingredients={product.ingredients}
+              />
+              <ChooseForm
+                onClick={(value) => setType(Number(value) as PizzaType)}
+                formType="Тесто"
+                items={product.items}
+                ingredients={product.ingredients}
+              />
+            </div>
+            <div className="p-3">
+              <Title as="h3" text="Добавить по вкусу" />
+              <InredientCardList />
+            </div>
+          </>
+          
+        )}
+        
         <div className="flex place-items-center py-2">
           <button className="flex-1 bg-orange-500 transition-colors duration-150 hover:bg-orange-600 rounded-2xl p-3 cursor-pointer">
             <span className="text-white">
