@@ -9,17 +9,26 @@ import {
 import { TCategory, TIngredient } from "@/shared/services/api/types";
 import { TCategoryWithRelations, TProductWithRelations } from "@/types/prisma";
 
+type TIngredientModal = {
+  id: number;
+  name: string;
+  price: number;
+}
+
 type NextPizzaState = {
   products: TProductWithRelations[];
   categories: TCategoryWithRelations[];
   currentCategory: TCategory;
   ingredients: TIngredient[];
   modalProduct: TProductWithRelations | null;
-  orderPizzaSize: number;
-  orderPizzaType: number;
+  orderModalData: {
+    pizzaSize?: number;
+    pizzaType?: number;
+    ingredients: TIngredientModal[];
+    price: number;
+  }
   totalPrice: number;
   totalCounter: number;
-  sortedBy: string;
   isLoading: boolean;
   error: string | undefined;
 };
@@ -33,11 +42,14 @@ const initialState: NextPizzaState = {
   },
   ingredients: [],
   modalProduct: null,
-  orderPizzaSize: 30,
-  orderPizzaType: 1,
+  orderModalData: {
+    pizzaSize: 30,
+    pizzaType: 1,
+    ingredients: [],
+    price: 0,
+  },
   totalPrice: 0,
   totalCounter: 0,
-  sortedBy: "популярности",
   isLoading: false,
   error: "",
 };
@@ -76,11 +88,29 @@ export const nextPizzaSlice = createSlice({
     },
 
     setPizzaSize: (state, action: PayloadAction<number>) => {
-      state.orderPizzaSize = action.payload;
+      state.orderModalData.pizzaSize = action.payload;
     },
 
     setPizzaType: (state, action: PayloadAction<number>) => {
-      state.orderPizzaType = action.payload;
+      state.orderModalData.pizzaType = action.payload;
+    },
+
+    // setOrderModalData: (state, action: PayloadAction<{
+    //   ingredient: TIngredient;
+    // }>) => {
+    //   state.orderModalData.ingredients = [action.payload.ingredient];
+      
+    // },
+
+    addIngredient: (state, action: PayloadAction<TIngredientModal>) => {
+      state.orderModalData.ingredients.push(action.payload);
+      state.orderModalData.price += action.payload.price;
+      console.log(state.orderModalData.price);
+    },
+
+    removeIngredient: (state, action: PayloadAction<TIngredientModal>) => {
+      state.orderModalData.price -= action.payload.price;
+      state.orderModalData.ingredients = state.orderModalData.ingredients.filter(ingredient => ingredient.id !== action.payload.id);
     },
   },
   extraReducers: (builder) => {
@@ -125,9 +155,6 @@ export const nextPizzaSlice = createSlice({
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.modalProduct = action.payload;
-
-        console.log(state.modalProduct);
-        console.log("Action Payload: ", action.payload);
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.isLoading = false;
@@ -139,31 +166,27 @@ export const nextPizzaSlice = createSlice({
     selectCategories: (state) => state.categories,
     selectCurrentCategory: (state) => state.currentCategory,
     selectIngredients: (state) => state.ingredients,
-    selectSortedBy: (state) => state.sortedBy,
     selectTotalPrice: (state) => state.totalPrice,
     selectTotalCounter: (state) => state.totalCounter,
     selectIsLoading: (state) => state.isLoading,
     selectModalProduct: (state) => state.modalProduct,
-    selectPizzaSize: (state) => state.orderPizzaSize,
-    selectPizzaType: (state) => state.orderPizzaType,
+    selectOrderModalData: (state) => state.orderModalData,
   },
 });
 
-export const { setCurrentCategory, setPizzaSize, setPizzaType } =
+export const { setCurrentCategory, setPizzaSize, setPizzaType, addIngredient, removeIngredient } =
   nextPizzaSlice.actions;
 
 export const {
   selectProducts,
   selectCategories,
   selectCurrentCategory,
-  selectSortedBy,
   selectIngredients,
   selectTotalPrice,
   selectTotalCounter,
   selectIsLoading,
   selectModalProduct,
-  selectPizzaSize,
-  selectPizzaType,
+  selectOrderModalData,
 } = nextPizzaSlice.selectors;
 
 export default nextPizzaSlice.reducer;

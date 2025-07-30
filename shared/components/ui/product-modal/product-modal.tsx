@@ -12,7 +12,7 @@ import { getPizzaDetails } from "@/lib/utils";
 import { PizzaSize, PizzaType } from "@/lib/constants";
 import { useEffect, useRef } from "react";
 
-export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product }) => {
+export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product, ingredientsPrice }) => {
   if (!product) {
     return null;
   }
@@ -30,7 +30,7 @@ export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product }) => {
     addIngredient,
   } = usePizzaOptions(product.items);
 
-  const { totalPrice, textDetaills } = getPizzaDetails(
+  const {  textDetaills } = getPizzaDetails(
     type,
     size,
     product.items,
@@ -50,45 +50,52 @@ export const ProductModalUI: React.FC<ProductModalUIProps> = ({ product }) => {
         </div>
       </div>
       <div className="grid grid-rows-[1fr_min-content] p-5 bg-[#fafafa] rounded-tr-xl rounded-br-xl">
-        <Title as="h2" text={product.name} className="text-3xl" />
-        { product.categoryId === 1 && (
-          <>
-            <span className="text-black/60 text-sm">{textDetaills}</span>
-            <p className="text-[16px] text-black/80 mt-2">
-              {product.ingredients
-                .map((ingredient, index) => {
-                  if (index > 0) return ingredient.name.toLowerCase();
+        <div>
+          <Title as="h2" text={product.name} className="text-3xl" />
+          { product.categoryId === 1 ? (
+            <>
+              <span className="text-black/60 text-sm">{textDetaills}</span>
+              <p className="text-[16px] text-black/80 mt-2">
+                {product.ingredients
+                  .map((ingredient, index) => {
+                    if (index > 0) return ingredient.name.toLowerCase();
 
-                  return ingredient.name;
-                })
-                .join(", ")}
-            </p>
-            <div className="flex flex-col gap2">
-              <ChooseForm
-                onClick={(value) => setSize(Number(value) as PizzaSize)}
-                formType="Размер"
-                items={product.items}
-                ingredients={product.ingredients}
-              />
-              <ChooseForm
-                onClick={(value) => setType(Number(value) as PizzaType)}
-                formType="Тесто"
-                items={product.items}
-                ingredients={product.ingredients}
-              />
+                    return ingredient.name;
+                  })
+                  .join(", ")}
+              </p>
+              <div className="flex flex-col gap2">
+                <ChooseForm
+                  onClick={(value) => setSize(Number(value) as PizzaSize)}
+                  formType="Размер"
+                  items={product.items}
+                  ingredients={product.ingredients}
+                />
+                <ChooseForm
+                  onClick={(value) => setType(Number(value) as PizzaType)}
+                  formType="Тесто"
+                  items={product.items}
+                  ingredients={product.ingredients}
+                />
+              </div>
+              <div className="p-3">
+                <Title as="h3" text="Добавить по вкусу" />
+                <InredientCardList />
+              </div>
+            </>
+            
+          ) : (
+            <div className="mt-3">
+              <span className="text-black/90 text-sm">{product.description}</span>
             </div>
-            <div className="p-3">
-              <Title as="h3" text="Добавить по вкусу" />
-              <InredientCardList />
-            </div>
-          </>
-          
-        )}
+          )}
+        </div>
+        
         
         <div className="flex place-items-center py-2">
           <button className="flex-1 bg-orange-500 transition-colors duration-150 hover:bg-orange-600 rounded-2xl p-3 cursor-pointer">
             <span className="text-white">
-              В корзину за {product.items[0].price} ₽
+              В корзину за {product.items[0].price + (ingredientsPrice ?? 0)} ₽
             </span>
           </button>
         </div>

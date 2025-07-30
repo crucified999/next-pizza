@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import { store, useAppSelector } from "@/shared/services/store";
 import { ProductModalUI } from "@/shared/components/ui/product-modal/product-modal";
 import { use } from "react";
-import { selectPizzaSize, selectPizzaType } from "@/shared/services/slices/nextPizzaSlice";
 import { getPizzaDetails } from "@/lib/utils";
+import ProductModal from "@/app/(home)/product/[id]/page";
 
 export default async function ProductModalPage({
   params,
@@ -32,7 +32,8 @@ export default async function ProductModalPage({
 
   return (
     <Modal>
-      <ProductModalUI product={product} />
+      {/* <ProductModalUI product={product} /> */}
+      <ProductModal params={{ id: params.id }} /> 
     </Modal>
   );
 }
